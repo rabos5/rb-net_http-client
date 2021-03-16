@@ -56,15 +56,14 @@ module NetHTTP
       end
 
       def self.parse_query(query)
-        # todo: may need to update this as URI.escape is considered obsolete
         case query
         when String
           query = query[1..-1] if query.start_with?('?')
-          URI.escape("?#{query}")
+          URI.encode_www_form_component("?#{query}")
         when Hash
           query = query.map { |k, v| "#{k}=#{v}" }
           query = query.join('&')
-          URI.escape("?#{query}")
+          URI.encode_www_form_component("?#{query}")
         else
           nil
         end
